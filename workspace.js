@@ -1,4 +1,5 @@
-/* global cpdefine chilipeppr cprequire */
+/* global cprequire_test cpdefine chilipeppr cprequire */
+
 cprequire_test(["inline:com-chilipeppr-workspace-stb"], function(ws) {
 
     console.log("initting workspace");
@@ -363,80 +364,80 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                 }); //End Zipwhip texting
 
 
-            // Zipwhip Recieve Text widget
-            // Dynamically load the Zipwhip Recieve Text widget, i.e. wait til user clicks on the button
-            // first time.
-            wsObj.zipwhipRecvTextObj = {
-                zipwhipRecvTextBtn: null,
-                zipwhipRecvTextDiv: null,
-                zipwhipRecvTextInstance: null,
-                init: function() {
-                    this.zipwhipRecvTextBtn = $('#com-chilipeppr-ws-menu .zipwhip-recvtext-button');
-                    this.zipwhipRecvTextDiv = $('#com-chilipeppr-ws-zipwhip-recvtext');
-                    this.setupBtn();
-                    console.log("done instantiating zipwhipRecvText add-on widget");
-                },
-                setupBtn: function() {
-                    this.zipwhipRecvTextBtn.click(this.togglezipwhipRecvText.bind(this));
-                },
-                togglezipwhipRecvText: function() {
-                    if (this.zipwhipRecvTextDiv.hasClass("hidden")) {
-                        // unhide
-                        this.showzipwhipRecvText();
-                    }
-                    else {
-                        this.hidezipwhipRecvText();
-                    }
-                },
-                showzipwhipRecvText: function(callback) {
-                    this.zipwhipRecvTextDiv.removeClass("hidden");
-                    this.zipwhipRecvTextBtn.addClass("active");
-
-                    console.log("got showzipwhipRecvText. this:", this, "wsObj:", wsObj);
-                    
-                    // see if instantiated already
-                    // if so, just activate
-                    if (this.zipwhipRecvTextInstance != null) {
-                        console.log("activating zipwhip recv text instead of re-instantiating cuz already created")
-                        this.zipwhipRecvTextInstance.activateWidget();
-                        if (callback) callback(this.zipwhipRecvTextInstance);
-                    }
-                    else {
-                        // otherwise, dynamic load
-                        console.log("zipwhip recv text appears to not be instantiated, let us load it from scratch")
-                        var that = this;
-                        chilipeppr.load(
-                          this.zipwhipRecvTextDiv.prop("id"),
-                          "http://raw.githubusercontent.com/chilipeppr/widget-recvtext/master/auto-generated-widget.html",
-                          function() {
-                            // Callback after widget loaded into #myDivWidgetRecvtext
-                            // Now use require.js to get reference to instantiated widget
-                            cprequire(
-                              ["inline:com-chilipeppr-widget-recvtext"], // the id you gave your widget
-                              function(myObjWidgetRecvtext) {
-                                // Callback that is passed reference to the newly loaded widget
-                                console.log("Widget / Zipwhip Receive Text just got loaded.", myObjWidgetRecvtext);
-                                myObjWidgetRecvtext.init();
-                                that.zipwhipRecvTextInstance = myObjWidgetRecvtext;
-                                if (callback) callback(that.zipwhipRecvTextInstance);
-                              }
+                // Zipwhip Recieve Text widget
+                // Dynamically load the Zipwhip Recieve Text widget, i.e. wait til user clicks on the button
+                // first time.
+                wsObj.zipwhipRecvTextObj = {
+                    zipwhipRecvTextBtn: null,
+                    zipwhipRecvTextDiv: null,
+                    zipwhipRecvTextInstance: null,
+                    init: function() {
+                        this.zipwhipRecvTextBtn = $('#com-chilipeppr-ws-menu .zipwhip-recvtext-button');
+                        this.zipwhipRecvTextDiv = $('#com-chilipeppr-ws-zipwhip-recvtext');
+                        this.setupBtn();
+                        console.log("done instantiating zipwhipRecvText add-on widget");
+                    },
+                    setupBtn: function() {
+                        this.zipwhipRecvTextBtn.click(this.togglezipwhipRecvText.bind(this));
+                    },
+                    togglezipwhipRecvText: function() {
+                        if (this.zipwhipRecvTextDiv.hasClass("hidden")) {
+                            // unhide
+                            this.showzipwhipRecvText();
+                        }
+                        else {
+                            this.hidezipwhipRecvText();
+                        }
+                    },
+                    showzipwhipRecvText: function(callback) {
+                        this.zipwhipRecvTextDiv.removeClass("hidden");
+                        this.zipwhipRecvTextBtn.addClass("active");
+                
+                        console.log("got showzipwhipRecvText. this:", this, "wsObj:", wsObj);
+                
+                        // see if instantiated already
+                        // if so, just activate
+                        if (this.zipwhipRecvTextInstance != null) {
+                            console.log("activating zipwhip recv text instead of re-instantiating cuz already created");
+                            this.zipwhipRecvTextInstance.activateWidget();
+                            if (callback) callback(this.zipwhipRecvTextInstance);
+                        }
+                        else {
+                            // otherwise, dynamic load
+                            console.log("zipwhip recv text appears to not be instantiated, let us load it from scratch");
+                            var that = this;
+                            chilipeppr.load(
+                                this.zipwhipRecvTextDiv.prop("id"),
+                                "http://raw.githubusercontent.com/chilipeppr/widget-recvtext/master/auto-generated-widget.html",
+                                function() {
+                                    // Callback after widget loaded into #myDivWidgetRecvtext
+                                    // Now use require.js to get reference to instantiated widget
+                                    cprequire(
+                                        ["inline:com-chilipeppr-widget-recvtext"], // the id you gave your widget
+                                        function(myObjWidgetRecvtext) {
+                                            // Callback that is passed reference to the newly loaded widget
+                                            console.log("Widget / Zipwhip Receive Text just got loaded.", myObjWidgetRecvtext);
+                                            myObjWidgetRecvtext.init();
+                                            that.zipwhipRecvTextInstance = myObjWidgetRecvtext;
+                                            if (callback) callback(that.zipwhipRecvTextInstance);
+                                        }
+                                    );
+                                }
                             );
-                          }
-                        );
-                    }
-                    $(window).trigger('resize');
-                },
-                hidezipwhipRecvText: function() {
-                    this.zipwhipRecvTextDiv.addClass("hidden");
-                    this.zipwhipRecvTextBtn.removeClass("active");
-                    
-                    console.log("got hidezipwhipRecvText. this:", this, "wsObj:", wsObj);
-                    
-                    if (this.zipwhipRecvTextInstance != null) {
-                        this.zipwhipRecvTextInstance.unactivateWidget();
-                    }
-                    $(window).trigger('resize');
-                },
+                        }
+                        $(window).trigger('resize');
+                    },
+                    hidezipwhipRecvText: function() {
+                        this.zipwhipRecvTextDiv.addClass("hidden");
+                        this.zipwhipRecvTextBtn.removeClass("active");
+                
+                        console.log("got hidezipwhipRecvText. this:", this, "wsObj:", wsObj);
+                
+                        if (this.zipwhipRecvTextInstance != null) {
+                            this.zipwhipRecvTextInstance.unactivateWidget();
+                        }
+                        $(window).trigger('resize');
+                    },
             };
             wsObj.zipwhipRecvTextObj.init();
             //End Zipwhip Receive Text
@@ -529,243 +530,6 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                 }); //End JSCut
                 
             
-            // Laser Solder
-            // com-chilipeppr-ws-jscut
-            chilipeppr.load(
-                "#com-chilipeppr-ws-lasersolder",
-                "http://fiddle.jshell.net/chilipeppr/xuu785yz/show/light/",
-                function() {
-                    require(["inline:com-chilipeppr-widget-lasersolder"], function(ls) {
-                        ls.init();
-                        ls.unactivateWidget();
-                        // setup toggle button
-                        var alBtn = $('#com-chilipeppr-ws-menu .lasersolder-button');
-                        var alDiv = $('#com-chilipeppr-ws-lasersolder');
-                        alBtn.click(function() {
-                            if (alDiv.hasClass("hidden")) {
-                                // unhide
-                                alDiv.removeClass("hidden");
-                                alBtn.addClass("active");
-                                ls.activateWidget();
-                            }
-                            else {
-                                alDiv.addClass("hidden");
-                                alBtn.removeClass("active");
-                                ls.unactivateWidget();
-                            }
-                            $(window).trigger('resize');
-
-                        });
-                    });
-                }); //End Laser Solder
-                
-
-            // Eagle BRD Import
-            // com-chilipeppr-widget-eagle
-
-            // Setup drag/drop for BRD files on our own because we don't
-            // want to instantiate the Eagle BRD codebase (i.e. load its massive
-            // javascript files) until the user try requests that we do
-            this.eagleObj = function() { 
-                return {
-                    eagleBtn: null,
-                    eagleDiv: null,
-                    eagleInstance: null,
-                    init: function() {
-                        this.eagleBtn = $('#com-chilipeppr-ws-menu .eagle-button');
-                        this.eagleDiv = $('#com-chilipeppr-ws-eagle');
-                        this.setupDragDrop();
-                        this.setupBtn();
-                        console.log("done instantiating micro Eagle BRD plug-in");
-                    },
-                    setupBtn: function() {
-                        this.eagleBtn.click(this.toggleEagle.bind(this));
-                    },
-                    toggleEagle: function() {
-                        if (this.eagleDiv.hasClass("hidden")) {
-                            // unhide
-                            this.showEagle();
-                        }
-                        else {
-                            this.hideEagle();
-                        }
-                    },
-                    showEagle: function(callback) {
-                        this.eagleDiv.removeClass("hidden");
-                        this.eagleBtn.addClass("active");
-    
-                        // see if instantiated already
-                        // if so, just activate
-                        if (this.eagleInstance != null) {
-                            this.eagleInstance.activateWidget();
-                            if (callback) callback();
-                        }
-                        else {
-                            // otherwise, dynamic load
-                            var that = this;
-                            chilipeppr.load(
-                                "#com-chilipeppr-ws-eagle",
-                                //"http://fiddle.jshell.net/chilipeppr/3fe23xsr/show/light/", 
-                                "http://raw.githubusercontent.com/chilipeppr/widget-eagle/master/auto-generated-widget.html",
-                                function() {
-                                    require(["inline:com-chilipeppr-widget-eagle"], function(eagle) {
-                                        that.eagleInstance = eagle;
-                                        console.log("Eagle BRD instantiated. eagleInstance:", that.eagleInstance);
-                                        that.eagleInstance.init();
-                                        //eagleInstance.activateWidget();
-                                        if (callback) callback();
-                                    });
-                                }
-                            );
-                        }
-                        $(window).trigger('resize');
-                    },
-                    hideEagle: function() {
-                        this.eagleDiv.addClass("hidden");
-                        this.eagleBtn.removeClass("active");
-                        if (this.eagleInstance != null) {
-                            this.eagleInstance.unactivateWidget();
-                        }
-                        $(window).trigger('resize');
-                    },
-                    setupDragDrop: function() {
-                        // subscribe to events
-                        chilipeppr.subscribe("/com-chilipeppr-elem-dragdrop/ondragover", this, this.onDragOver);
-                        chilipeppr.subscribe("/com-chilipeppr-elem-dragdrop/ondragleave", this, this.onDragLeave);
-                        // /com-chilipeppr-elem-dragdrop/ondropped
-                        chilipeppr.subscribe("/com-chilipeppr-elem-dragdrop/ondropped", this, this.onDropped, 9); // default is 10, we do 9 to be higher priority
-                    },
-                    onDropped: function(data, info) {
-                        console.log("onDropped. len of file:", data.length, "info:", info);
-                        // we have the data
-                        // double check it's a board file, cuz it could be gcode
-                        if (data.match(/<!DOCTYPE eagle SYSTEM "eagle.dtd">/i)) {
-    
-                            // check that there's a board tag
-                            if (data.match(/<board>/i)) {
-                                console.log("we have an eagle board file!");
-                                this.fileInfo = info;
-                                var that = this;
-                                this.showEagle(function() {
-                                    console.log("got callback after showing eagle. now opening file.");
-                                    that.eagleInstance.open(data, info);
-                                });
-                                console.log("opened brd file");
-    
-                                // do NOT store a lastDropped, rather we should
-                                // get told from the workspace what the last file
-                                // was and if it was a BRD file we should auto-open
-                                /*
-                                localStorage.setItem('com-chilipeppr-widget-eagle-lastDropped', data);
-                                localStorage.setItem('com-chilipeppr-widget-eagle-lastDropped-info', JSON.stringify(info));
-                                console.log("saved brd file to localstorage");
-                                */
-                            }
-                            else {
-                                console.log("looks like it is an eagle generated file, but not a board file. sad.");
-                                chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Looks like you dragged in an Eagle CAD file, but it contains no board tag. You may have dragged in a schematic instead. Please retry with a valid board file.");
-                            }
-    
-                            // now, we need to return false so no other widgets see this
-                            // drag/drop event because they won't know how to handle
-                            // an Eagle Brd file
-                            return false;
-                        }
-                        else {
-                            if (info && 'name' in info && info.name.match(/.brd$/i)) {
-                                // this looks like an Eagle brd file, but it's binary
-                                chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Error Loading Eagle BRD File", "Looks like you dragged in an Eagle BRD file, but it seems to be in binary. You can open this file in Eagle and then re-save it to a new file to create a text version of your Eagle BRD file.", 15 * 1000);
-                                return false;
-                            }
-                            else {
-                                console.log("we do not have an eagle board file. sad.");
-                            }
-                        }
-                    },
-                    onDragOver: function() {
-                        console.log("onDragOver");
-                        $('#com-chilipeppr-widget-eagle').addClass("panel-primary");
-                        $('#com-chilipeppr-ws-menu .eagle-button').addClass("btn-primary");
-                    },
-                    onDragLeave: function() {
-                        console.log("onDragLeave");
-                        $('#com-chilipeppr-widget-eagle').removeClass("panel-primary");
-                        $('#com-chilipeppr-ws-menu .eagle-button').removeClass("btn-primary");
-                    },
-                }; 
-                
-            }();
-            console.log("eagleObj:", this.eagleObj);
-            this.eagleObj.init();
-            //End Eagle Brd Import
-
-            // GPIO
-            // net-delarre-widget-gpio
-
-            // Dynamically load the GPIO widget, i.e. wait til user clicks on the button
-            // first time.
-            this.gpioObj = {
-                gpioBtn: null,
-                gpioDiv: null,
-                gpioInstance: null,
-                init: function() {
-                    this.gpioBtn = $('#com-chilipeppr-ws-menu .gpio-button');
-                    this.gpioDiv = $('#com-chilipeppr-ws-gpio');
-                    this.setupBtn();
-                    console.log("done instantiating GPIO add-on widget");
-                },
-                setupBtn: function() {
-                    this.gpioBtn.click(this.toggleGpio.bind(this));
-                },
-                toggleGpio: function() {
-                    if (this.gpioDiv.hasClass("hidden")) {
-                        // unhide
-                        this.showGpio();
-                    }
-                    else {
-                        this.hideGpio();
-                    }
-                },
-                showGpio: function(callback) {
-                    this.gpioDiv.removeClass("hidden");
-                    this.gpioBtn.addClass("active");
-
-                    // see if instantiated already
-                    // if so, just activate
-                    if (this.gpioInstance != null) {
-                        //this.gpioInstance.activateWidget();
-                        if (callback) callback();
-                    }
-                    else {
-                        // otherwise, dynamic load
-                        var that = this;
-                        chilipeppr.load(
-                            "#com-chilipeppr-ws-gpio",
-                            "http://raw.githubusercontent.com/chilipeppr/widget-gpio/master/auto-generated-widget.html",
-                            function() {
-                                require(["inline:net-delarre-widget-gpio"], function(gpio) {
-                                    that.gpioInstance = gpio;
-                                    console.log("GPIO instantiated. gpioInstance:", that.gpioInstance);
-                                    that.gpioInstance.init();
-                                    //eagleInstance.activateWidget();
-                                    if (callback) callback();
-                                });
-                            }
-                        );
-                    }
-                    $(window).trigger('resize');
-                },
-                hideGpio: function() {
-                    this.gpioDiv.addClass("hidden");
-                    this.gpioBtn.removeClass("active");
-                    if (this.gpioInstance != null) {
-                        //this.gpioInstance.unactivateWidget();
-                    }
-                    $(window).trigger('resize');
-                },
-            };
-            this.gpioObj.init();
-            //End GPIO
 
             // SuttleXpress
             // Dynamically load the ShuttleXpress Widget. i.e. wait til user clicks on 
@@ -908,20 +672,6 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
             this.touchPlateObj.init();
             //End Touch Plate
 
-            // Arduino / Atmel Firmware Programmer
-            // FIDDLE http://jsfiddle.net/chilipeppr/qcduvhkh/11/
-            chilipeppr.load(
-                "com-chilipeppr-ws-programmer",
-                "http://raw.githubusercontent.com/chilipeppr/widget-programmer/master/auto-generated-widget.html",
-                require(["inline:com-chilipeppr-widget-programmer"], function (programmer) {
-                    programmer.init();
-                    // setup toggle button
-                    var btn = $('#com-chilipeppr-ws-menu .programmer-button');
-                    var div = $('#com-chilipeppr-ws-programmer');
-                    btn.click(programmer.show.bind(programmer));
-                })  
-            );  //End Arduino / Atmel Firmware Programmer
-    
             // Element / Drag Drop
             // Load the dragdrop element into workspace toolbar
             // http://jsfiddle.net/chilipeppr/Z9F6G/
