@@ -861,6 +861,23 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                 "#com-chilipeppr-ws-touchplate",
                                 "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
                                 function() {
+                                    // Callback after widget loaded into #myDivDlvpWidgetTouchplate
+                                    // Now use require.js to get reference to instantiated widget
+                                    cprequire(
+                                        ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the id you gave your widget
+                                        function(myObjDlvpWidgetTouchplate) {
+                                            // Callback that is passed reference to the newly loaded widget
+                                            console.log("Dlvp Widget / Touchplate just got loaded.", myObjDlvpWidgetTouchplate);
+                                            myObjDlvpWidgetTouchplate.init();
+                                        }
+                                    );
+                                }
+                            );
+                            
+                            /*chilipeppr.load(
+                                "#com-chilipeppr-ws-touchplate",
+                                "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
+                                function() {
                                     ["inline:com-chilipeppr-dlvp-widget-touchplate"], 
                                     function(touchPlate) {
                                         that.touchPlateInstance = touchPlate;
@@ -870,7 +887,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                         if (callback) callback();
                                     };
                                 }
-                            );
+                            ); // end chilipeppr.load */
                         }
                         $(window).trigger('resize');
                     },
