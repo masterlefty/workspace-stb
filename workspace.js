@@ -609,67 +609,65 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
             // the button first time.
             this.touchPlateObj = function() {
                 return {
-                touchPlateBtn: null,
-                touchPlateDiv: null,
-                touchPlateInstance: null,
-                init: function() {
-                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
-                    this.touchPlateDiv = $('#com-chilipeppr-ws-dlvp-touchplate-instance');
-                    this.setupBtn();
-                    console.log("done instantiating touchPlate add-on widget");
-                },
-                setupBtn: function() {
-                    this.touchPlateBtn.click(this.toggletouchPlate.bind(this));
-                },
-                toggletouchPlate: function() {
-                    if (this.touchPlateDiv.hasClass("hidden")) {
-                        // unhide
-                        this.showtouchPlate();
-                    }
-                    else {
-                        this.hidetouchPlate();
-                    }
-                },
-                showtouchPlate: function(callback) {
-                    this.touchPlateDiv.removeClass("hidden");
-                    this.touchPlateBtn.addClass("active");
-
-                    // see if instantiated already
-                    // if so, just activate
-                    if (this.touchPlateInstance != null) {
-                        this.touchPlateInstance.activateWidget();
-                        if (callback) callback();
-                    }
-                    else {
-                        // otherwise, dynamic load
-                        var that = this;
-                        chilipeppr.load(
-                            "#myDivDlvpWidgetTouchplate",
-                            "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
-                            function() {
-                                // Callback after widget loaded into #myDivDlvpWidgetTouchplate
-                                // Now use require.js to get reference to instantiated widget
-                                cprequire(
-                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the id you gave your widget
-                                    function(myObjDlvpWidgetTouchplate) {
-                                        // Callback that is passed reference to the newly loaded widget
-                                        console.log("Dlvp Widget / Touchplate just got loaded.", myObjDlvpWidgetTouchplate);
-                                        myObjDlvpWidgetTouchplate.init();
-                                    }
-                                );
-                            }
-                        );
-                    }
-                    $(window).trigger('resize');
-                },
-                hidetouchPlate: function() {
-                    this.touchPlateDiv.addClass("hidden");
-                    this.touchPlateBtn.removeClass("active");
-                    if (this.touchPlateInstance != null) {
-                        this.touchPlateInstance.unactivateWidget();
-                    }
-                    $(window).trigger('resize');
-                },
+                    touchPlateBtn: null,
+                    touchPlateDiv: null,
+                    touchPlateInstance: null,
+                    init: function() {
+                        this.touchPlateBtn = $('#com-chilipeppr-ws-menu .touchplate-button');
+                        this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate');
+                        this.setupBtn();
+                        console.log("done instantiating touchPlate add-on widget");
+                    },
+                    setupBtn: function() {
+                        this.touchPlateBtn.click(this.toggletouchPlate.bind(this));
+                    },
+                    toggletouchPlate: function() {
+                        if (this.touchPlateDiv.hasClass("hidden")) {
+                            // unhide
+                            this.showtouchPlate();
+                        }
+                        else {
+                            this.hidetouchPlate();
+                        }
+                    },
+                    showtouchPlate: function(callback) {
+                        this.touchPlateDiv.removeClass("hidden");
+                        this.touchPlateBtn.addClass("active");
+            
+                        // see if instantiated already
+                        // if so, just activate
+                        if (this.touchPlateInstance != null) {
+                            this.touchPlateInstance.activateWidget();
+                            if (callback) callback();
+                        }
+                        else {
+                            // otherwise, dynamic load
+                            var that = this;
+                            chilipeppr.load(
+                                "#com-chilipeppr-ws-touchplate",
+                                "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
+                                function() {
+                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], 
+                                    function(touchPlate) {
+                                        that.touchPlateInstance = touchPlate;
+                                        console.log("touchPlate instantiated. touchPlateInstance:", that.touchPlateInstance);
+                                        that.touchPlateInstance.init();
+                                        //eagleInstance.activateWidget();
+                                        if (callback) callback();
+                                    };
+                                }
+                            );
+                        }
+                        $(window).trigger('resize');
+                    },
+                    hidetouchPlate: function() {
+                        this.touchPlateDiv.addClass("hidden");
+                        this.touchPlateBtn.removeClass("active");
+                        if (this.touchPlateInstance != null) {
+                            this.touchPlateInstance.unactivateWidget();
+                        }
+                        $(window).trigger('resize');
+                    },
                 }
             }();
             this.touchPlateObj.init();

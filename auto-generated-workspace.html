@@ -823,67 +823,65 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
             // the button first time.
             this.touchPlateObj = function() {
                 return {
-                touchPlateBtn: null,
-                touchPlateDiv: null,
-                touchPlateInstance: null,
-                init: function() {
-                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
-                    this.touchPlateDiv = $('#com-chilipeppr-ws-dlvp-touchplate-instance');
-                    this.setupBtn();
-                    console.log("done instantiating touchPlate add-on widget");
-                },
-                setupBtn: function() {
-                    this.touchPlateBtn.click(this.toggletouchPlate.bind(this));
-                },
-                toggletouchPlate: function() {
-                    if (this.touchPlateDiv.hasClass("hidden")) {
-                        // unhide
-                        this.showtouchPlate();
-                    }
-                    else {
-                        this.hidetouchPlate();
-                    }
-                },
-                showtouchPlate: function(callback) {
-                    this.touchPlateDiv.removeClass("hidden");
-                    this.touchPlateBtn.addClass("active");
-
-                    // see if instantiated already
-                    // if so, just activate
-                    if (this.touchPlateInstance != null) {
-                        this.touchPlateInstance.activateWidget();
-                        if (callback) callback();
-                    }
-                    else {
-                        // otherwise, dynamic load
-                        var that = this;
-                        chilipeppr.load(
-                            "#myDivDlvpWidgetTouchplate",
-                            "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
-                            function() {
-                                // Callback after widget loaded into #myDivDlvpWidgetTouchplate
-                                // Now use require.js to get reference to instantiated widget
-                                cprequire(
-                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the id you gave your widget
-                                    function(myObjDlvpWidgetTouchplate) {
-                                        // Callback that is passed reference to the newly loaded widget
-                                        console.log("Dlvp Widget / Touchplate just got loaded.", myObjDlvpWidgetTouchplate);
-                                        myObjDlvpWidgetTouchplate.init();
-                                    }
-                                );
-                            }
-                        );
-                    }
-                    $(window).trigger('resize');
-                },
-                hidetouchPlate: function() {
-                    this.touchPlateDiv.addClass("hidden");
-                    this.touchPlateBtn.removeClass("active");
-                    if (this.touchPlateInstance != null) {
-                        this.touchPlateInstance.unactivateWidget();
-                    }
-                    $(window).trigger('resize');
-                },
+                    touchPlateBtn: null,
+                    touchPlateDiv: null,
+                    touchPlateInstance: null,
+                    init: function() {
+                        this.touchPlateBtn = $('#com-chilipeppr-ws-menu .touchplate-button');
+                        this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate');
+                        this.setupBtn();
+                        console.log("done instantiating touchPlate add-on widget");
+                    },
+                    setupBtn: function() {
+                        this.touchPlateBtn.click(this.toggletouchPlate.bind(this));
+                    },
+                    toggletouchPlate: function() {
+                        if (this.touchPlateDiv.hasClass("hidden")) {
+                            // unhide
+                            this.showtouchPlate();
+                        }
+                        else {
+                            this.hidetouchPlate();
+                        }
+                    },
+                    showtouchPlate: function(callback) {
+                        this.touchPlateDiv.removeClass("hidden");
+                        this.touchPlateBtn.addClass("active");
+            
+                        // see if instantiated already
+                        // if so, just activate
+                        if (this.touchPlateInstance != null) {
+                            this.touchPlateInstance.activateWidget();
+                            if (callback) callback();
+                        }
+                        else {
+                            // otherwise, dynamic load
+                            var that = this;
+                            chilipeppr.load(
+                                "#com-chilipeppr-ws-touchplate",
+                                "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
+                                function() {
+                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], 
+                                    function(touchPlate) {
+                                        that.touchPlateInstance = touchPlate;
+                                        console.log("touchPlate instantiated. touchPlateInstance:", that.touchPlateInstance);
+                                        that.touchPlateInstance.init();
+                                        //eagleInstance.activateWidget();
+                                        if (callback) callback();
+                                    };
+                                }
+                            );
+                        }
+                        $(window).trigger('resize');
+                    },
+                    hidetouchPlate: function() {
+                        this.touchPlateDiv.addClass("hidden");
+                        this.touchPlateBtn.removeClass("active");
+                        if (this.touchPlateInstance != null) {
+                            this.touchPlateInstance.unactivateWidget();
+                        }
+                        $(window).trigger('resize');
+                    },
                 }
             }();
             this.touchPlateObj.init();
@@ -1144,7 +1142,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                 data-trigger="hover" data-delay="100">GPIO</button> -->
                                 <button type="button" class="btn btn-xs btn-default shuttlexpress-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="ShuttleXpress Jog Dial." data-trigger="hover" data-delay="100">ShuttleXpress</button>
 
-                                <button type="button" class="btn btn-xs btn-default dlvp-touchplate-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="Use a touch plate to easily figure out your Z zero of your workpiece and set it." data-trigger="hover"
+                                <button type="button" class="btn btn-xs btn-default touchplate-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="Use a touch plate to easily figure out your Z zero of your workpiece and set it." data-trigger="hover"
                                 data-delay="100">Touch Plate</button>
 
                                 <!--<button type="button" class="btn btn-xs btn-default programmer-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="Program your Arduino or Atmel chip directly from ChiliPeppr." data-trigger="hover" data-delay="100">Arduino / Atmel Firmware Uploader</button> -->
@@ -1181,7 +1179,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
 
                         <!-- Touch Plate -->
                         <!--<div class="zhigh hidden" id="com-chilipeppr-ws-touchplate">Touch Plate Here</div> -->
-                        <div class="zhigh hidden" id="com-chilipeppr-ws-dlvp-touchplate-instance">Touch Plate Here</div>
+                        <div class="zhigh hidden" id="com-chilipeppr-ws-touchplate">Touch Plate Here</div>
 
                         <!-- Arduino / Atmel Firmware Programmer -->
                         <!--<div class="zhigh xhidden" id="com-chilipeppr-ws-programmer">Arduino / Atmel Firmware Programmer Here</div> -->
