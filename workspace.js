@@ -614,7 +614,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                 touchPlateInstance: null,
                 init: function() {
                     this.touchPlateBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
-                    this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate-instance');
+                    this.touchPlateDiv = $('#com-chilipeppr-ws-dlvp-touchplate-instance');
                     this.setupBtn();
                     console.log("done instantiating touchPlate add-on widget");
                 },
@@ -644,7 +644,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                         // otherwise, dynamic load
                         var that = this;
                         chilipeppr.load(
-                            "#com-chilipeppr-dlvp-widget-touchplate",
+                            "#com-chilipeppr-ws-dlvp-widget-touchplate-instance",
                             "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
                             function() {
                                 require(["inline:com-chilipeppr-dlvp-widget-touchplate"], function(touchPlate) {
