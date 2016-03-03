@@ -644,16 +644,19 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                         // otherwise, dynamic load
                         var that = this;
                         chilipeppr.load(
-                            "#com-chilipeppr-ws-dlvp-widget-touchplate-instance",
+                            "#myDivDlvpWidgetTouchplate",
                             "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
                             function() {
-                                require(["inline:com-chilipeppr-dlvp-widget-touchplate"], function(touchPlate) {
-                                    that.touchPlateInstance = touchPlate;
-                                    console.log("touchPlate instantiated. touchPlateInstance:", that.touchPlateInstance);
-                                    that.touchPlateInstance.init();
-                                    //eagleInstance.activateWidget();
-                                    if (callback) callback();
-                                });
+                                // Callback after widget loaded into #myDivDlvpWidgetTouchplate
+                                // Now use require.js to get reference to instantiated widget
+                                cprequire(
+                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the id you gave your widget
+                                    function(myObjDlvpWidgetTouchplate) {
+                                        // Callback that is passed reference to the newly loaded widget
+                                        console.log("Dlvp Widget / Touchplate just got loaded.", myObjDlvpWidgetTouchplate);
+                                        myObjDlvpWidgetTouchplate.init();
+                                    }
+                                );
                             }
                         );
                     }
