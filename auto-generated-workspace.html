@@ -242,7 +242,7 @@ cprequire_test(["inline:com-chilipeppr-workspace-stb"], function(ws) {
     ws.init();
 
     // Do some niceties for testing like margins on widget and title for browser
-    $('title').html("Tinyg Workspace");
+    $('title').html("Masterlefty/Tinyg Workspace");
     $('body').css('padding', '10px');
 
 } /*end_test*/ );
@@ -827,8 +827,8 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                 touchPlateDiv: null,
                 touchPlateInstance: null,
                 init: function() {
-                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .touchplate-button');
-                    this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate');
+                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
+                    this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate-instance');
                     this.setupBtn();
                     console.log("done instantiating touchPlate add-on widget");
                 },
@@ -858,7 +858,24 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                         // otherwise, dynamic load
                         var that = this;
                         chilipeppr.load(
-                            "#com-chilipeppr-ws-touchplate",
+                            "#myDivDlvpWidgetTouchplate",
+                            "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
+                            function() {
+                                // Callback after widget loaded into #myDivDlvpWidgetTouchplate
+                                // Now use require.js to get reference to instantiated widget
+                                cprequire(
+                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the id you gave your widget
+                                    function(myObjDlvpWidgetTouchplate) {
+                                        // Callback that is passed reference to the newly loaded widget
+                                        console.log("Dlvp Widget / Touchplate just got loaded.", myObjDlvpWidgetTouchplate);
+                                        myObjDlvpWidgetTouchplate.init();
+                                    }
+                                );
+                            }
+                        );
+                        /*
+                        chilipeppr.load(
+                            "#com-chilipeppr-dlvp-widget-touchplate",
                             "http://raw.githubusercontent.com/chilipeppr/widget-touchplate/master/auto-generated-widget.html",
                             function() {
                                 require(["inline:com-chilipeppr-widget-touchplate"], function(touchPlate) {
@@ -869,7 +886,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                     if (callback) callback();
                                 });
                             }
-                        );
+                        ); */
                     }
                     $(window).trigger('resize');
                 },
@@ -1141,7 +1158,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                 data-trigger="hover" data-delay="100">GPIO</button> -->
                                 <button type="button" class="btn btn-xs btn-default shuttlexpress-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="ShuttleXpress Jog Dial." data-trigger="hover" data-delay="100">ShuttleXpress</button>
 
-                                <button type="button" class="btn btn-xs btn-default touchplate-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="Use a touch plate to easily figure out your Z zero of your workpiece and set it." data-trigger="hover"
+                                <button type="button" class="btn btn-xs btn-default dlvp-touchplate-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="Use a touch plate to easily figure out your Z zero of your workpiece and set it." data-trigger="hover"
                                 data-delay="100">Touch Plate</button>
 
                                 <!--<button type="button" class="btn btn-xs btn-default programmer-button" data-container="body" data-toggle="popover" data-placement="auto" data-content="Program your Arduino or Atmel chip directly from ChiliPeppr." data-trigger="hover" data-delay="100">Arduino / Atmel Firmware Uploader</button> -->
@@ -1177,7 +1194,8 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                         <div class="zhigh hidden" id="com-chilipeppr-ws-shuttlexpress">ShuttleXpress Here</div>
 
                         <!-- Touch Plate -->
-                        <div class="zhigh hidden" id="com-chilipeppr-ws-touchplate">Touch Plate Here</div>
+                        <!--<div class="zhigh hidden" id="com-chilipeppr-ws-touchplate">Touch Plate Here</div> -->
+                        <div class="zhigh hidden" id="com-chilipeppr-ws-dlvp-touchplate-instance">Touch Plate Here</div>
 
                         <!-- Arduino / Atmel Firmware Programmer -->
                         <!--<div class="zhigh xhidden" id="com-chilipeppr-ws-programmer">Arduino / Atmel Firmware Programmer Here</div> -->

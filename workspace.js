@@ -28,7 +28,7 @@ cprequire_test(["inline:com-chilipeppr-workspace-stb"], function(ws) {
     ws.init();
 
     // Do some niceties for testing like margins on widget and title for browser
-    $('title').html("Tinyg Workspace");
+    $('title').html("Masterlefty/Tinyg Workspace");
     $('body').css('padding', '10px');
 
 } /*end_test*/ );
@@ -613,8 +613,8 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                 touchPlateDiv: null,
                 touchPlateInstance: null,
                 init: function() {
-                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .touchplate-button');
-                    this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate');
+                    this.touchPlateBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
+                    this.touchPlateDiv = $('#com-chilipeppr-ws-touchplate-instance');
                     this.setupBtn();
                     console.log("done instantiating touchPlate add-on widget");
                 },
@@ -644,7 +644,24 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                         // otherwise, dynamic load
                         var that = this;
                         chilipeppr.load(
-                            "#com-chilipeppr-ws-touchplate",
+                            "#myDivDlvpWidgetTouchplate",
+                            "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
+                            function() {
+                                // Callback after widget loaded into #myDivDlvpWidgetTouchplate
+                                // Now use require.js to get reference to instantiated widget
+                                cprequire(
+                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the id you gave your widget
+                                    function(myObjDlvpWidgetTouchplate) {
+                                        // Callback that is passed reference to the newly loaded widget
+                                        console.log("Dlvp Widget / Touchplate just got loaded.", myObjDlvpWidgetTouchplate);
+                                        myObjDlvpWidgetTouchplate.init();
+                                    }
+                                );
+                            }
+                        );
+                        /*
+                        chilipeppr.load(
+                            "#com-chilipeppr-dlvp-widget-touchplate",
                             "http://raw.githubusercontent.com/chilipeppr/widget-touchplate/master/auto-generated-widget.html",
                             function() {
                                 require(["inline:com-chilipeppr-widget-touchplate"], function(touchPlate) {
@@ -655,7 +672,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                     if (callback) callback();
                                 });
                             }
-                        );
+                        ); */
                     }
                     $(window).trigger('resize');
                 },
