@@ -185,7 +185,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                 myObjDlvpWidgetTouchplate);
                                 myObjDlvpWidgetTouchplate.init();
                                 // setup toggle button
-                                var alBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
+                                var alBtn = $('#com-chilipeppr-ws .dlvp-touchplate-button');
                                 var alDiv = $('#com-chilipeppr-ws-touchplate-instance');
                                 alBtn.click(function() {
                                     if (alDiv.hasclass("hidden")) {
