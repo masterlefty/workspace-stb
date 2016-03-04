@@ -86,6 +86,9 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
             
             // Add our billboard to the menu (has name, url, picture of workspace)
             this.addBillboardToWorkspaceMenu();
+            
+            // development touch plate
+            this.loadTouchplateWidget();
 
             // Setup an event to react to window resize. This helps since
             // some of our widgets have a manual resize to cleanly fill
@@ -163,6 +166,45 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                 }
             );
         },
+        
+        /**
+         * Load the dlvp Touch Plate Widget
+         */
+        loadTouchplateWidget: function(callback) {
+            chilipeppr.load(
+                    "#com-chilipeppr-ws-touchplate-instance ",
+                    "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
+                    function() {
+                        // Callback after widget loaded into # com-chilipeppr-ws-touchplate
+                        // Now use require.js to get reference to instantiated widget
+                        cprequire(
+                            ["inline:com-chilipeppr-dlvp-widget-touchplate"], // the widget’s id
+                            function(myObjDlvpWidgetTouchplate) {
+                                // Callback that is passed reference to the newly loaded widget
+                                console.log("Dlvp Widget / Touchplate just got loaded.",
+                                    myObjDlvpWidgetTouchplate);
+                                myObjDlvpWidgetTouchplate.init();
+                                // setup toggle button
+                                var alBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
+                                var alDiv = $('#com-chilipeppr-ws-touchplate-instance');
+                                alBtn.click(function() {
+                                    if (alDiv.hasclass("hidden")) {
+                                        // unhide
+                                        alDiv.removeClass("hidden");
+                                        alBtn.addClass("active");
+                                    }
+                                    else {
+                                        alDiv.addClass("hidden");
+                                        alBtn.removeClass("active");
+                                    }
+                                    $(window).trigger('resize');
+                                });
+                            }
+                        );
+                    }
+        )},
+        
+        
         /**
          * Load the Console widget via chilipeppr.load()
          */
@@ -336,7 +378,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
               }
             );
             */
-
+      
             // Zipwhip texting
             // com-chilipeppr-ws-zipwhip
             chilipeppr.load(
@@ -659,21 +701,6 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                                     );
                                 }
                             );
-                            
-                            /*chilipeppr.load(
-                                "#com-chilipeppr-ws-touchplate",
-                                "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
-                                function() {
-                                    ["inline:com-chilipeppr-dlvp-widget-touchplate"], 
-                                    function(touchPlate) {
-                                        that.touchPlateInstance = touchPlate;
-                                        console.log("touchPlate instantiated. touchPlateInstance:", that.touchPlateInstance);
-                                        that.touchPlateInstance.init();
-                                        //eagleInstance.activateWidget();
-                                        if (callback) callback();
-                                    };
-                                }
-                            ); // end chilipeppr.load */
                         }
                         $(window).trigger('resize');
                     },
