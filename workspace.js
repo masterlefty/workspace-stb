@@ -202,7 +202,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                             }
                         );
                     }
-        )},
+            )},
         
         
         /**
