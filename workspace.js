@@ -172,7 +172,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
          */
         loadTouchplateWidget: function(callback) {
             chilipeppr.load(
-                    "#com-chilipeppr-ws-touchplate-instance ",
+                    "#com-chilipeppr-ws-touchplate-instance",
                     "http://raw.githubusercontent.com/masterlefty/dlvp-widget-touchplate/master/auto-generated-widget.html",
                     function() {
                         // Callback after widget loaded into # com-chilipeppr-ws-touchplate
@@ -182,7 +182,7 @@ cpdefine("inline:com-chilipeppr-workspace-stb", ["chilipeppr_ready"], function()
                             function(myObjDlvpWidgetTouchplate) {
                                 // Callback that is passed reference to the newly loaded widget
                                 console.log("Dlvp Widget / Touchplate just got loaded.",
-                                    myObjDlvpWidgetTouchplate);
+                                myObjDlvpWidgetTouchplate);
                                 myObjDlvpWidgetTouchplate.init();
                                 // setup toggle button
                                 var alBtn = $('#com-chilipeppr-ws-menu .dlvp-touchplate-button');
